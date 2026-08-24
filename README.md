@@ -73,46 +73,6 @@ Users can:
 * Add and manage their own reviews
 * Access protected routes only when authorized
 
-## 🚀 Getting Started
-
-### Clone the repository
-
-```bash
-git clone https://github.com/Samar3007/YELP-CAMP.git
-cd YELP-CAMP
-```
-
-### Install dependencies
-
-```bash
-npm install
-```
-
-### Configure environment variables
-
-Create a `.env` file:
-
-```env
-DB_URL=your_mongodb_connection_string
-MAPBOX_TOKEN=your_mapbox_token
-CLOUDINARY_CLOUD_NAME=your_cloudinary_cloud_name
-CLOUDINARY_KEY=your_cloudinary_key
-CLOUDINARY_SECRET=your_cloudinary_secret
-SECRET=your_session_secret
-```
-
-### Run the application
-
-```bash
-npm start
-```
-
-Then open:
-
-```text
-http://localhost:3000
-```
-
 ## 📚 What I Learned
 
 Through this project, I gained practical experience with:
