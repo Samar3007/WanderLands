@@ -1,6 +1,6 @@
-# 🏕️ RoamCamp
+# 🏕️ WanderLands
 
-**RoamCamp** is a full-stack campground discovery and review platform where users can explore campgrounds, view locations on an interactive map, create listings, upload images, and share reviews.
+**WanderLands** is a full-stack campground discovery and review platform where users can explore campgrounds, view locations on an interactive map, create listings, upload images, and share reviews.
 
 This project was built as a hands-on full-stack web development project while learning modern web development concepts with Node.js, Express, MongoDB, and JavaScript.
 
