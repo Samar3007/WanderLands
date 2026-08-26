@@ -16,6 +16,9 @@ const opts = {toJSON: {virtuals: true}};
 const CampgroundSchema = new Schema({
     title: String,
     images: [ImageSchema],
+    price: Number,
+    description: String,
+    location: String,
     geometry: {
         type: {
             type: String,
@@ -27,9 +30,6 @@ const CampgroundSchema = new Schema({
             required: true
         }
     },
-    price: Number,
-    description: String,
-    location: String,
     author: {
         type: Schema.Types.ObjectId,
         ref: 'User'
@@ -43,7 +43,7 @@ const CampgroundSchema = new Schema({
 }, opts);
 
 CampgroundSchema.virtual('properties.popUpMarkup').get(function() {
-    return `<strong><a href="/campgrounds/${this._id}">${this.title}</a></strong>`;
+    return `<strong><a href="/listings/${this._id}">${this.title}</a></strong>`;
 });
 
 

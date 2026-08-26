@@ -67,7 +67,7 @@ store.on("error", function (e){
 const sessionConfig = {
     store,
     name: 'session',
-    secret: 'thisshouldbeabettersecret!',
+    secret: secret,
     resave: false,
     saveUninitialized: true,
     cookie:{
@@ -149,8 +149,8 @@ app.use((req, res, next) => {
 })
 
 app.use('/', userRoutes);
-app.use('/campgrounds', campgroundRoutes);
-app.use('/campgrounds/:id/reviews', reviewRoutes);
+app.use('/listings', campgroundRoutes);
+app.use('/listings/:id/reviews', reviewRoutes);
 app.use(mongoSanitize());
 
 
@@ -168,6 +168,9 @@ app.use((err, req, res, next)=> {
     res.status(statusCode).render('error', { err });
 })
 
-app.listen(3000, () => {
-    console.log('Serving on port 3000')
+const port = process.env.PORT || 3000;
+
+app.listen(port, () => {
+    console.log(`Serving on port ${port}`)
 })
+

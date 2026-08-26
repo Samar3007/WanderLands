@@ -1,8 +1,9 @@
 <% layout('layouts/boilerplate.ejs') %>
 <div class="row">
-    <h1 class="text-center">New Campground</h1>
+    <p class="eyebrow text-center">Share a place worth discovering</p>
+    <h1 class="page-title text-center">Create a new listing</h1>
     <div class="col-md-6 offset-md-3">
-        <form action="/campgrounds" method="POST" novalidate class="validated-form" enctype="multipart/form-data">
+        <form action="/listings" method="POST" novalidate class="validated-form" enctype="multipart/form-data">
         <div class="mb-3">
             <label class="form-label" for="title">Title</label>
             <input class="form-control" type="text" id="title" name="campground[title]" required>
@@ -24,7 +25,7 @@
         <div class="mb-3">
             <label class="form-label" for="price">Price</label>
             <div class="input-group mb-3">
-                <span class="input-group-text">$</span>
+                <span class="input-group-text">₹</span>
                 <input type="text" class="form-control" id="price" aria-label="Amount (to the nearest dollar)" name="campground[price]" required>
                 <span class="input-group-text">.00</span>
                 <div class="valid-feedback">
@@ -48,10 +49,12 @@
             </div>
         </div>
         <div class="mb-3">
-            <button class="btn btn-success">Add Campground</button>
+            <button class="btn btn-success form-action-btn">Add Listing</button>
         </div>
         </form>
-        <a href="/campgrounds">All Campgrounds</a>
+        <div class="form-secondary-action">
+            <a class="back-link" href="/listings">← Back to all listings</a>
+        </div>
     </div>
 </div>
 

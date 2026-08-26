@@ -3,11 +3,11 @@ maptilersdk.config.apiKey = maptilerApiKey;
 const map = new maptilersdk.Map({
     container: 'cluster-map',
     style: maptilersdk.MapStyle.BRIGHT,
-    center: [-103.59179687498357, 40.66995747013945],
-    zoom: 3
+    center: [78.9629, 20.5937],
+    zoom: 3.75
 });
 
-map.on('load', function () {
+map.on('load', async function () {
     map.addSource('campgrounds', {
         type: 'geojson',
         data: campgrounds,
@@ -15,6 +15,18 @@ map.on('load', function () {
         clusterMaxZoom: 14, // Max zoom to cluster points on
         clusterRadius: 50 // Radius of each cluster when clustering points (defaults to 50)
     });
+    
+    const pinSvg = `<svg xmlns="http://www.w3.org/2000/svg" width="42" height="52" viewBox="0 0 42 52">
+        <path d="M21 1C9.95 1 1 9.95 1 21c0 14.5 20 30 20 30s20-15.5 20-30C41 9.95 32.05 1 21 1Z" fill="#168aad" stroke="#ffffff" stroke-width="2"/>
+        <circle cx="21" cy="21" r="7" fill="#ffffff"/>
+    </svg>`;
+    const pinImage = new Image(42, 52);
+    pinImage.src = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(pinSvg)}`;
+    await new Promise((resolve, reject) => {
+        pinImage.onload = resolve;
+        pinImage.onerror = reject;
+    });
+    map.addImage('listing-pin', pinImage);
 
     map.addLayer({
         id: 'clusters',
@@ -68,14 +80,14 @@ map.on('load', function () {
 
     map.addLayer({
         id: 'unclustered-point',
-        type: 'circle',
+        type: 'symbol',
         source: 'campgrounds',
         filter: ['!', ['has', 'point_count']],
-        paint: {
-            'circle-color': '#11b4da',
-            'circle-radius': 4,
-            'circle-stroke-width': 1,
-            'circle-stroke-color': '#fff'
+        layout: {
+            'icon-image': 'listing-pin',
+            'icon-size': 0.75,
+            'icon-anchor': 'bottom',
+            'icon-allow-overlap': true
         }
     });
 
@@ -96,9 +108,12 @@ map.on('load', function () {
     // the unclustered-point layer, open a popup at
     // the location of the feature, with
     // description HTML from its properties.
-    map.on('click', 'unclustered-point', function (e) {
-        const { popUpMarkup } = e.features[0].properties;
-        const coordinates = e.features[0].geometry.coordinates.slice();
+    const openPointPopup = function (e) {
+        const feature = e.features[0];
+        const { properties = {} } = feature;
+        const popUpMarkup = properties.popUpMarkup ||
+            `<div class="map-popup-card"><p class="map-popup-title">${properties.title || 'Listing'}</p><p class="map-popup-location">${properties.location || ''}</p><a class="map-popup-link" href="/listings/${feature.id}">View listing <span aria-hidden="true">→</span></a></div>`;
+        const coordinates = feature.geometry.coordinates.slice();
 
         // Ensure that if the map is zoomed out such that
         // multiple copies of the feature are visible, the
@@ -111,6 +126,16 @@ map.on('load', function () {
             .setLngLat(coordinates)
             .setHTML(popUpMarkup)
             .addTo(map);
+    };
+
+    map.on('click', 'unclustered-point', openPointPopup);
+    map.on('mouseenter', 'unclustered-point', openPointPopup);
+
+    map.on('mouseenter', 'unclustered-point', () => {
+        map.getCanvas().style.cursor = 'pointer';
+    });
+    map.on('mouseleave', 'unclustered-point', () => {
+        map.getCanvas().style.cursor = '';
     });
 
     map.on('mouseenter', 'clusters', () => {

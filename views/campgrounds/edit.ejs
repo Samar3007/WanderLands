@@ -1,9 +1,11 @@
 <% layout('layouts/boilerplate.ejs') %>
 <div class="row">
-    <h1 class="text-center">Edit Campground</h1>
+    <p class="eyebrow text-center">Keep your stay details fresh</p>
+    <h1 class="page-title text-center">Edit your listing</h1>
+
     <div class="col-md-6 offset-md-3">
 
-    <form action="/campgrounds/<%=campground._id%>?_method=PUT" method="POST" novalidate class="validated-form" enctype="multipart/form-data">
+    <form action="/listings/<%=campground._id%>?_method=PUT" method="POST" novalidate class="validated-form" enctype="multipart/form-data">
         <div class="mb-3">
             <label class="form-label" for="title">Title</label>
             <input class="form-control" type="text" id="title" name="campground[title]" value="<%=campground.title%>" required>
@@ -21,7 +23,7 @@
         <div class="mb-3">
             <label class="form-label" for="price">Price</label>
             <div class="input-group mb-3">
-                <span class="input-group-text">$</span>
+                <span class="input-group-text">₹</span>
                 <input type="text" class="form-control" id="price" aria-label="Amount (to the nearest dollar)" name="campground[price]" value="<%=campground.price%>" required>
                 <span class="input-group-text">.00</span>
                 <div class="valid-feedback">
@@ -51,9 +53,11 @@
             <% }) %>
         </div>
         <div class="mb-3">
-            <button class="btn btn-success">Update Campground</button>
+            <button class="btn btn-success form-action-btn">Update Listing</button>
         </div>        
     </form>
-    <a href="/campgrounds/<%=campground._id%>">Back to Campground</a>
+    <div class="form-secondary-action">
+        <a class="back-link" href="/listings/<%=campground._id%>">← Back to listing</a>
+    </div>
     </div>
 </div>

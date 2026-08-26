@@ -1,4 +1,4 @@
-const Campground = require('../models/campground');
+const Campground = require('../models/campgrounds');
 const Review = require('../models/review');
 
 module.exports.createReview = async (req, res) => {
@@ -9,7 +9,7 @@ module.exports.createReview = async (req, res) => {
     await review.save();
     await campground.save();
     req.flash('success', 'Created a new review!');
-    res.redirect(`/campgrounds/${campground._id}`);
+    res.redirect(`/listings/${campground._id}`);
 }
 
 module.exports.deleteReview = async (req, res) => {
@@ -17,5 +17,5 @@ module.exports.deleteReview = async (req, res) => {
     await Review.findByIdAndDelete(reviewId);
     await Campground.findByIdAndUpdate(id, {$pull: {reviews: reviewId}});
     req.flash('success', 'Successfully deleted a review!');
-    res.redirect(`/campgrounds/${id}`);
+    res.redirect(`/listings/${id}`);
 }

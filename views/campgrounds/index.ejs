@@ -1,17 +1,23 @@
 <% layout('layouts/boilerplate.ejs') %>
 <div id="cluster-map"></div>
-<h1>All campgrounds</h1>
+<div class="page-heading">
+    <p class="eyebrow">Find your next escape</p>
+    <h1 class="page-title">Explore all listings</h1>
+    <p class="page-subtitle">Handpicked stays for quiet weekends, bold adventures, and everything in between.</p>
+</div>
 <div>
-    <a href="/campgrounds/new">Add new</a>
+    <a class="btn add-listing-btn" href="/listings/new">
+        <span aria-hidden="true">＋</span> Add new listing
+    </a>
 </div>
 <% campgrounds.forEach((campground, i) => { %>            
     <div class="card mb-3">
         <div class="row">
             <div class="col-md-4">
                 <% if(campground.images.length) {%>
-                    <img crossorigin="anonymous" class="img-fluid" alt="" src="<%=campground.images[0].url %>">
+                    <img crossorigin="anonymous" class="img-fluid listing-image" alt="" src="<%=campground.images[0].url %>">
                 <% } else {%>
-                    <img crossorigin="anonymous" class="img-fluid" alt="" src="https://res.cloudinary.com/dktywzocf/image/upload/v1755544623/YelpCamp/bpyncexzwcjdgf8tl6en.png">
+                    <img crossorigin="anonymous" class="img-fluid listing-image" alt="" src="https://res.cloudinary.com/dktywzocf/image/upload/v1755544623/YelpCamp/bpyncexzwcjdgf8tl6en.png">
                 <% } %>
             </div>
             <div class="col-md-8">
@@ -21,7 +27,7 @@
                     <p class="card-text">
                         <small class="text-muted"><%=campground.location%></small>
                     </p>
-                    <a class="btn btn-primary" href="/campgrounds/<%=campground.id%>">View <%=campground.title%></a>
+                    <a class="btn btn-primary" href="/listings/<%=campground._id%>">View <%=campground.title%></a>
                 </div>
             </div>
         </div>
@@ -30,6 +36,18 @@
 
 <script>
     const maptilerApiKey = '<%- process.env.MAPTILER_API_KEY %>';
-    const campgrounds = { features: <%- JSON.stringify(campgrounds) %>}
+     const campgrounds = {
+        type: 'FeatureCollection',
+        features: <%- JSON.stringify(campgrounds.map(campground => ({
+            type: 'Feature',
+            geometry: campground.geometry,
+            properties: {
+                title: campground.title,
+                location: campground.location,
+                popUpMarkup: `<div class="map-popup-card"><p class="map-popup-title">${campground.title}</p><p class="map-popup-location">${campground.location}</p><a class="map-popup-link" href="/listings/${campground._id}">View listing <span aria-hidden="true">→</span></a></div>`
+            },
+            id: campground._id
+        }))) %>
+    };
 </script>
 <script src="/javascripts/clusterMap.js"></script>
