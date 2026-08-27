@@ -39,7 +39,7 @@ This project was built as a hands-on full-stack web development project while le
 
 **Services & Tools**
 
-* Mapbox — maps & geocoding
+* MapTiler — maps & geocoding
 * Cloudinary — image storage
 * Passport.js — authentication
 * Git & GitHub
