@@ -1,15 +1,15 @@
-# 🏕️ WanderLands
+# **WanderLands**
 
-**WanderLands** is a full-stack campground discovery and review platform where users can explore campgrounds, view locations on an interactive map, create listings, upload images, and share reviews.
+**WanderLands** is a full-stack property discovery and review platform where users can explore properties, view locations on an interactive map, create property listings, upload images, and share reviews.
 
 This project was built as a hands-on full-stack web development project while learning modern web development concepts with Node.js, Express, MongoDB, and JavaScript.
 
 ## ✨ Features
 
 * 🔐 User registration, login, and logout
-* 🏕️ Create, view, edit, and delete campground listings
-* ⭐ Create, edit, and delete campground reviews
-* 🗺️ Interactive maps and location-based campground information
+* 🏠 Create, view, edit, and delete property listings
+* ⭐ Create, edit, and delete property reviews
+* 🗺️ Interactive maps and location-based property information
 * 📸 Image uploads and cloud storage
 * 🛡️ Authentication and authorization
 * ✅ Server-side validation and error handling
@@ -64,11 +64,11 @@ The application also integrates external services such as **Mapbox** for locatio
 
 ## 🔐 Authentication & Authorization
 
-Camply uses session-based authentication and authorization to protect user actions.
+WanderLands uses session-based authentication and authorization to protect user actions.
 
 Users can:
 
-* Create their own campground listings
+* Create their own property listings
 * Edit and delete their own listings
 * Add and manage their own reviews
 * Access protected routes only when authorized
