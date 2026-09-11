@@ -22,7 +22,7 @@ const campgroundRoutes = require('./routes/campgrounds')
 const reviewRoutes = require('./routes/reviews');
 
 const MongoDBStore = require("connect-mongo")(session);
-
+const favicon = require('serve-favicon');
 
 const dbUrl = process.env.DB_URL;
 if (!dbUrl) {
@@ -54,6 +54,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.use(mongoSanitize({
 //    replaceWith: '_'
 }))
+app.use(favicon(path.join(__dirname, 'public', 'WanderLands.png')));
 
 const secret = process.env.SECRET || 'thisshouldbeabettersecret!';
 
